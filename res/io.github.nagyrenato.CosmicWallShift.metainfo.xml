@@ -62,10 +62,7 @@
     </release>
   </releases>
 
-  <!-- TODO before Flathub submission:
-       1. Take a screenshot of the app and upload it to the repo under res/screenshots/
-       2. Uncomment and fill in the block below with the raw GitHub URL, e.g.:
-          https://raw.githubusercontent.com/nagyrenato/cosmic-theme-background-switcher/main/res/screenshots/main.png
+  <!-- Uncomment when screenshot is uploaded to the repo under res/screenshots/
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/nagyrenato/cosmic-theme-background-switcher/main/res/screenshots/main.png</image>
