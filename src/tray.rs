@@ -26,7 +26,7 @@ impl ksni::Tray for AppTray {
     }
 
     fn icon_name(&self) -> String {
-        "preferences-desktop-wallpaper".into()
+        "io.github.nagyrenato.CosmicWallShift".into()
     }
 
     fn title(&self) -> String {
