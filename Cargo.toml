@@ -1,5 +1,5 @@
 [package]
-name = "cosmic-bg-sync"
+name = "cosmic-wallshift"
 version = "0.1.0"
 edition = "2024"
 description = "Automatically switch wallpaper when the COSMIC Desktop theme toggles between light and dark mode"

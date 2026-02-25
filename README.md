@@ -1,4 +1,4 @@
-# cosmic-bg-sync
+# CosmicWallShift
 
 A lightweight system-tray app for the [COSMIC Desktop Environment](https://github.com/pop-os/cosmic-epoch) that automatically switches your wallpaper when the system theme toggles between **Light** and **Dark** mode.
 
@@ -40,7 +40,7 @@ A lightweight system-tray app for the [COSMIC Desktop Environment](https://githu
 > Once submitted to Flathub, install with:
 
 ```bash
-flatpak install flathub io.github.nagyrenato.CosmicBgSync
+flatpak install flathub io.github.nagyrenato.CosmicWallShift
 ```
 
 ### Build from source
@@ -71,7 +71,7 @@ sudo just install
 Or manually:
 
 ```bash
-sudo install -Dm755 target/release/cosmic-bg-sync /usr/bin/cosmic-bg-sync
+sudo install -Dm755 target/release/cosmic-wallshift /usr/bin/cosmic-wallshift
 ```
 
 ---
@@ -83,7 +83,7 @@ sudo install -Dm755 target/release/cosmic-bg-sync /usr/bin/cosmic-bg-sync
 ```bash
 cargo run --release
 # or, after installing:
-cosmic-bg-sync
+cosmic-wallshift
 ```
 
 ### Configure wallpaper paths
@@ -101,11 +101,11 @@ Create a desktop entry in `~/.config/autostart/`:
 
 ```bash
 mkdir -p ~/.config/autostart
-cat > ~/.config/autostart/cosmic-bg-sync.desktop << EOF
+cat > ~/.config/autostart/cosmic-wallshift.desktop << EOF
 [Desktop Entry]
 Type=Application
-Name=COSMIC BG Sync
-Exec=/usr/local/bin/cosmic-bg-sync
+Name=CosmicWallShift
+Exec=/usr/local/bin/cosmic-wallshift
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
@@ -171,14 +171,14 @@ EOF
 cosmic-theme-background-switcher/
 ├── Cargo.toml
 ├── justfile                                            # Build / install targets
-├── io.github.nagyrenato.CosmicBgSync.yml               # Flatpak manifest
+├── io.github.nagyrenato.CosmicWallShift.yml               # Flatpak manifest
 ├── cargo-sources.json                                  # Vendored Cargo deps (offline Flatpak builds)
 ├── res/
-│   ├── io.github.nagyrenato.CosmicBgSync.desktop       # Desktop entry
-│   ├── io.github.nagyrenato.CosmicBgSync.metainfo.xml  # AppStream metadata
+│   ├── io.github.nagyrenato.CosmicWallShift.desktop       # Desktop entry
+│   ├── io.github.nagyrenato.CosmicWallShift.metainfo.xml  # AppStream metadata
 │   ├── screenshots/                                    # TODO: add app screenshots here
 │   └── icons/
-│       └── io.github.nagyrenato.CosmicBgSync.svg       # App icon
+│       └── io.github.nagyrenato.CosmicWallShift.svg       # App icon
 └── src/
     ├── main.rs        # Entry point — configures and launches the libcosmic app
     ├── app.rs         # Application struct, view, update logic
@@ -197,7 +197,7 @@ cosmic-theme-background-switcher/
 The StatusNotifierWatcher service must be running. On COSMIC this is provided by the panel. Check stderr:
 
 ```bash
-cosmic-bg-sync 2>&1 | grep -i tray
+cosmic-wallshift 2>&1 | grep -i tray
 ```
 
 If you see `System tray unavailable: ...`, the watcher is not available in your session.
@@ -225,10 +225,10 @@ Test a local Flatpak build:
 sudo apt install flatpak-builder
 
 # Build and install locally
-flatpak-builder --install --user --force-clean build-dir io.github.nagyrenato.CosmicBgSync.yml
+flatpak-builder --install --user --force-clean build-dir io.github.nagyrenato.CosmicWallShift.yml
 
 # Run it
-flatpak run io.github.nagyrenato.CosmicBgSync
+flatpak run io.github.nagyrenato.CosmicWallShift
 ```
 
 **Before submitting to Flathub**, take a screenshot of the running app and add it:
@@ -237,13 +237,13 @@ flatpak run io.github.nagyrenato.CosmicBgSync
 mkdir -p res/screenshots
 cp /path/to/screenshot.png res/screenshots/main.png
 # Then uncomment the <screenshots> block in:
-# res/io.github.nagyrenato.CosmicBgSync.metainfo.xml
+# res/io.github.nagyrenato.CosmicWallShift.metainfo.xml
 ```
 
 Validate the metainfo:
 
 ```bash
-appstreamcli validate res/io.github.nagyrenato.CosmicBgSync.metainfo.xml
+appstreamcli validate res/io.github.nagyrenato.CosmicWallShift.metainfo.xml
 ```
 
 To regenerate `cargo-sources.json` after updating `Cargo.lock`:

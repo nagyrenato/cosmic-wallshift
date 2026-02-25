@@ -22,7 +22,7 @@ struct AppTray {
 
 impl ksni::Tray for AppTray {
     fn id(&self) -> String {
-        "io.github.nagyrenato.CosmicBgSync".into()
+        "io.github.nagyrenato.CosmicWallShift".into()
     }
 
     fn icon_name(&self) -> String {
@@ -30,7 +30,7 @@ impl ksni::Tray for AppTray {
     }
 
     fn title(&self) -> String {
-        "COSMIC BG Sync".into()
+        "CosmicWallShift".into()
     }
 
     fn menu(&self) -> Vec<ksni::MenuItem<Self>> {

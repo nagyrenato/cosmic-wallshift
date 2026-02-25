@@ -1,11 +1,11 @@
-app-id: io.github.nagyrenato.CosmicBgSync
+app-id: io.github.nagyrenato.CosmicWallShift
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
 
-command: cosmic-bg-sync
+command: cosmic-wallshift
 
 finish-args:
   # Wayland display
@@ -21,25 +21,25 @@ finish-args:
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
   env:
-    CARGO_HOME: /run/build/cosmic-bg-sync/cargo
+    CARGO_HOME: /run/build/cosmic-wallshift/cargo
     RUST_BACKTRACE: '1'
 
 modules:
-  - name: cosmic-bg-sync
+  - name: cosmic-wallshift
     buildsystem: simple
     build-commands:
       # Offline build using vendored sources (see README — Flatpak section)
       - cargo --offline build --release --verbose
-      - install -Dm755 target/release/cosmic-bg-sync /app/bin/cosmic-bg-sync
+      - install -Dm755 target/release/cosmic-wallshift /app/bin/cosmic-wallshift
       # Desktop entry
-      - install -Dm644 res/io.github.nagyrenato.CosmicBgSync.desktop
-          /app/share/applications/io.github.nagyrenato.CosmicBgSync.desktop
+      - install -Dm644 res/io.github.nagyrenato.CosmicWallShift.desktop
+          /app/share/applications/io.github.nagyrenato.CosmicWallShift.desktop
       # AppStream metainfo
-      - install -Dm644 res/io.github.nagyrenato.CosmicBgSync.metainfo.xml
-          /app/share/metainfo/io.github.nagyrenato.CosmicBgSync.metainfo.xml
+      - install -Dm644 res/io.github.nagyrenato.CosmicWallShift.metainfo.xml
+          /app/share/metainfo/io.github.nagyrenato.CosmicWallShift.metainfo.xml
       # Icon (scalable SVG)
-      - install -Dm644 res/icons/io.github.nagyrenato.CosmicBgSync.svg
-          /app/share/icons/hicolor/scalable/apps/io.github.nagyrenato.CosmicBgSync.svg
+      - install -Dm644 res/icons/io.github.nagyrenato.CosmicWallShift.svg
+          /app/share/icons/hicolor/scalable/apps/io.github.nagyrenato.CosmicWallShift.svg
     sources:
       - type: dir
         path: .

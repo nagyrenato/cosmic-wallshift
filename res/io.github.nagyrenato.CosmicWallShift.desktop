@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=COSMIC BG Sync
+Name=CosmicWallShift
 GenericName=Wallpaper Sync
 Comment=Automatically switch wallpaper when COSMIC theme changes
-Exec=cosmic-bg-sync
-Icon=io.github.nagyrenato.CosmicBgSync
+Exec=cosmic-wallshift
+Icon=io.github.nagyrenato.CosmicWallShift
 Categories=Utility;Settings;
 Keywords=wallpaper;theme;dark;light;cosmic;background;
 StartupNotify=true
