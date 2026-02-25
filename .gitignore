@@ -1,3 +1,5 @@
 /target
 /build-dir
 /.flatpak-builder
+/.venv
+/flatpak-cargo-generator.py

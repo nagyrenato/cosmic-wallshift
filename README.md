@@ -40,7 +40,7 @@ A lightweight system-tray app for the [COSMIC Desktop Environment](https://githu
 > Once submitted to Flathub, install with:
 
 ```bash
-flatpak install flathub io.github.YOUR_USERNAME.CosmicBgSync
+flatpak install flathub io.github.nagyrenato.CosmicBgSync
 ```
 
 ### Build from source
@@ -56,8 +56,8 @@ sudo apt install git curl build-essential libwayland-dev libxkbcommon-dev
 ```
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/cosmic-bg-sync
-cd cosmic-bg-sync
+git clone https://github.com/nagyrenato/cosmic-theme-background-switcher
+cd cosmic-theme-background-switcher
 cargo build --release
 ```
 
@@ -168,15 +168,17 @@ EOF
 ## Project structure
 
 ```
-cosmic-bg-sync/
+cosmic-theme-background-switcher/
 ├── Cargo.toml
 ├── justfile                                            # Build / install targets
-├── io.github.YOUR_USERNAME.CosmicBgSync.yml            # Flatpak manifest
+├── io.github.nagyrenato.CosmicBgSync.yml               # Flatpak manifest
+├── cargo-sources.json                                  # Vendored Cargo deps (offline Flatpak builds)
 ├── res/
-│   ├── io.github.YOUR_USERNAME.CosmicBgSync.desktop    # Desktop entry
-│   ├── io.github.YOUR_USERNAME.CosmicBgSync.metainfo.xml  # AppStream metadata
+│   ├── io.github.nagyrenato.CosmicBgSync.desktop       # Desktop entry
+│   ├── io.github.nagyrenato.CosmicBgSync.metainfo.xml  # AppStream metadata
+│   ├── screenshots/                                    # TODO: add app screenshots here
 │   └── icons/
-│       └── io.github.YOUR_USERNAME.CosmicBgSync.svg   # App icon (add yours here)
+│       └── io.github.nagyrenato.CosmicBgSync.svg       # App icon
 └── src/
     ├── main.rs        # Entry point — configures and launches the libcosmic app
     ├── app.rs         # Application struct, view, update logic
@@ -214,25 +216,41 @@ This is a known limitation of Wayland: surfaces cannot be re-shown after being h
 
 ## Flatpak packaging
 
-Before submitting to Flathub, generate the offline Cargo sources file and an app icon:
+The project is ready for Flatpak submission. `cargo-sources.json` (vendored Cargo deps for offline builds) and the app icon are already committed.
+
+Test a local Flatpak build:
 
 ```bash
-# 1. Install the generator (one-time)
-pip install flatpak-cargo-generator
+# Install flatpak-builder if needed
+sudo apt install flatpak-builder
 
-# 2. Generate cargo-sources.json from the lock file
-flatpak-cargo-generator.py Cargo.lock -o cargo-sources.json
+# Build and install locally
+flatpak-builder --install --user --force-clean build-dir io.github.nagyrenato.CosmicBgSync.yml
 
-# 3. Add your SVG icon
-cp /path/to/your/icon.svg res/icons/io.github.YOUR_USERNAME.CosmicBgSync.svg
-
-# 4. Replace every YOUR_USERNAME and YOUR_NAME placeholder in all files
+# Run it
+flatpak run io.github.nagyrenato.CosmicBgSync
 ```
 
-Then validate locally:
+**Before submitting to Flathub**, take a screenshot of the running app and add it:
 
 ```bash
-flatpak-builder --force-clean build-dir io.github.YOUR_USERNAME.CosmicBgSync.yml
+mkdir -p res/screenshots
+cp /path/to/screenshot.png res/screenshots/main.png
+# Then uncomment the <screenshots> block in:
+# res/io.github.nagyrenato.CosmicBgSync.metainfo.xml
+```
+
+Validate the metainfo:
+
+```bash
+appstreamcli validate res/io.github.nagyrenato.CosmicBgSync.metainfo.xml
+```
+
+To regenerate `cargo-sources.json` after updating `Cargo.lock`:
+
+```bash
+pip install aiohttp tomlkit
+curl -sL https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/master/cargo/flatpak-cargo-generator.py | python3 - Cargo.lock -o cargo-sources.json
 ```
 
 ---

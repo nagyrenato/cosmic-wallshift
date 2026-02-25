@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2024"
 description = "Automatically switch wallpaper when the COSMIC Desktop theme toggles between light and dark mode"
 license = "MIT"
-repository = "https://github.com/YOUR_USERNAME/cosmic-bg-sync"
-homepage = "https://github.com/YOUR_USERNAME/cosmic-bg-sync"
-authors = ["YOUR_NAME <YOUR_EMAIL>"]
+repository = "https://github.com/nagyrenato/cosmic-theme-background-switcher"
+homepage = "https://github.com/nagyrenato/cosmic-theme-background-switcher"
+authors = ["Renato Nagy <nagy.renato@hotmail.com>"]
 
 [dependencies]
 cosmic = { git = "https://github.com/pop-os/libcosmic", package = "libcosmic", features = ["winit", "tokio", "wayland"] }

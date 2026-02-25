@@ -22,7 +22,7 @@ struct AppTray {
 
 impl ksni::Tray for AppTray {
     fn id(&self) -> String {
-        "com.github.cosmic-bg-sync".into()
+        "io.github.nagyrenato.CosmicBgSync".into()
     }
 
     fn icon_name(&self) -> String {

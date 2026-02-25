@@ -18,7 +18,7 @@ impl cosmic::Application for App {
     type Executor = executor::Default;
     type Flags = ();
     type Message = Message;
-    const APP_ID: &'static str = "com.github.cosmic-bg-sync";
+    const APP_ID: &'static str = "io.github.nagyrenato.CosmicBgSync";
 
     fn core(&self) -> &Core {
         &self.core

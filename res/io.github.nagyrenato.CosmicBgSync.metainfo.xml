@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.YOUR_USERNAME.CosmicBgSync</id>
+  <id>io.github.nagyrenato.CosmicBgSync</id>
   <name>COSMIC BG Sync</name>
   <summary>Automatically switch wallpaper on COSMIC theme changes</summary>
   <metadata_license>MIT</metadata_license>
@@ -20,13 +20,13 @@
     </ul>
   </description>
 
-  <launchable type="desktop-id">io.github.YOUR_USERNAME.CosmicBgSync.desktop</launchable>
+  <launchable type="desktop-id">io.github.nagyrenato.CosmicBgSync.desktop</launchable>
 
-  <url type="homepage">https://github.com/YOUR_USERNAME/cosmic-bg-sync</url>
-  <url type="bugtracker">https://github.com/YOUR_USERNAME/cosmic-bg-sync/issues</url>
+  <url type="homepage">https://github.com/nagyrenato/cosmic-theme-background-switcher</url>
+  <url type="bugtracker">https://github.com/nagyrenato/cosmic-theme-background-switcher/issues</url>
 
-  <developer>
-    <name>YOUR_NAME</name>
+  <developer id="io.github.nagyrenato">
+    <name>Renato Nagy</name>
   </developer>
 
   <recommends>
@@ -62,10 +62,15 @@
     </release>
   </releases>
 
+  <!-- TODO before Flathub submission:
+       1. Take a screenshot of the app and upload it to the repo under res/screenshots/
+       2. Uncomment and fill in the block below with the raw GitHub URL, e.g.:
+          https://raw.githubusercontent.com/nagyrenato/cosmic-theme-background-switcher/main/res/screenshots/main.png
   <screenshots>
     <screenshot type="default">
-      <caption>Settings window</caption>
-      <!-- TODO: add screenshot URL -->
+      <image>https://raw.githubusercontent.com/nagyrenato/cosmic-theme-background-switcher/main/res/screenshots/main.png</image>
+      <caption>Settings window showing light and dark wallpaper selection</caption>
     </screenshot>
   </screenshots>
+  -->
 </component>

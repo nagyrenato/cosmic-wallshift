@@ -1,4 +1,4 @@
-app-id: io.github.YOUR_USERNAME.CosmicBgSync
+app-id: io.github.nagyrenato.CosmicBgSync
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
@@ -32,14 +32,14 @@ modules:
       - cargo --offline build --release --verbose
       - install -Dm755 target/release/cosmic-bg-sync /app/bin/cosmic-bg-sync
       # Desktop entry
-      - install -Dm644 res/io.github.YOUR_USERNAME.CosmicBgSync.desktop
-          /app/share/applications/io.github.YOUR_USERNAME.CosmicBgSync.desktop
+      - install -Dm644 res/io.github.nagyrenato.CosmicBgSync.desktop
+          /app/share/applications/io.github.nagyrenato.CosmicBgSync.desktop
       # AppStream metainfo
-      - install -Dm644 res/io.github.YOUR_USERNAME.CosmicBgSync.metainfo.xml
-          /app/share/metainfo/io.github.YOUR_USERNAME.CosmicBgSync.metainfo.xml
+      - install -Dm644 res/io.github.nagyrenato.CosmicBgSync.metainfo.xml
+          /app/share/metainfo/io.github.nagyrenato.CosmicBgSync.metainfo.xml
       # Icon (scalable SVG)
-      - install -Dm644 res/icons/io.github.YOUR_USERNAME.CosmicBgSync.svg
-          /app/share/icons/hicolor/scalable/apps/io.github.YOUR_USERNAME.CosmicBgSync.svg
+      - install -Dm644 res/icons/io.github.nagyrenato.CosmicBgSync.svg
+          /app/share/icons/hicolor/scalable/apps/io.github.nagyrenato.CosmicBgSync.svg
     sources:
       - type: dir
         path: .
