@@ -1,0 +1,15 @@
+[package]
+name = "cosmic-bg-sync"
+version = "0.1.0"
+edition = "2024"
+description = "Automatically switch wallpaper when the COSMIC Desktop theme toggles between light and dark mode"
+license = "MIT"
+repository = "https://github.com/YOUR_USERNAME/cosmic-bg-sync"
+homepage = "https://github.com/YOUR_USERNAME/cosmic-bg-sync"
+authors = ["YOUR_NAME <YOUR_EMAIL>"]
+
+[dependencies]
+cosmic = { git = "https://github.com/pop-os/libcosmic", package = "libcosmic", features = ["winit", "tokio", "wayland"] }
+tokio = { version = "1.49.0", features = ["rt-multi-thread", "fs", "sync"] }
+notify = "8.2.0"
+ksni = "0.3.3"

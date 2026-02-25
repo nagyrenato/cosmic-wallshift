@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.YOUR_USERNAME.CosmicBgSync</id>
+  <name>COSMIC BG Sync</name>
+  <summary>Automatically switch wallpaper on COSMIC theme changes</summary>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+
+  <description>
+    <p>
+      COSMIC BG Sync is a lightweight system-tray app for the COSMIC Desktop Environment
+      that automatically switches your wallpaper when the system theme toggles between
+      Light and Dark mode.
+    </p>
+    <ul>
+      <li>Detects theme changes in real-time using inotify — no polling</li>
+      <li>Applies the correct wallpaper instantly on every theme switch</li>
+      <li>Sits quietly in the system tray; close the window without quitting</li>
+      <li>Built with libcosmic for a native COSMIC look and feel</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">io.github.YOUR_USERNAME.CosmicBgSync.desktop</launchable>
+
+  <url type="homepage">https://github.com/YOUR_USERNAME/cosmic-bg-sync</url>
+  <url type="bugtracker">https://github.com/YOUR_USERNAME/cosmic-bg-sync/issues</url>
+
+  <developer>
+    <name>YOUR_NAME</name>
+  </developer>
+
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+
+  <categories>
+    <category>Utility</category>
+    <category>Settings</category>
+  </categories>
+
+  <keywords>
+    <keyword>wallpaper</keyword>
+    <keyword>theme</keyword>
+    <keyword>dark mode</keyword>
+    <keyword>light mode</keyword>
+    <keyword>cosmic</keyword>
+    <keyword>background</keyword>
+  </keywords>
+
+  <content_rating type="oars-1.1" />
+
+  <releases>
+    <release version="0.1.0" date="2026-02-25">
+      <description>
+        <p>Initial release.</p>
+      </description>
+    </release>
+  </releases>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Settings window</caption>
+      <!-- TODO: add screenshot URL -->
+    </screenshot>
+  </screenshots>
+</component>
