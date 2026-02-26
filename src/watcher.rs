@@ -16,25 +16,39 @@ pub fn theme_watcher() -> Subscription<Message> {
                 "/home/{}/.config/cosmic/com.system76.CosmicTheme.Mode/v1/is_dark",
                 user
             );
+            // Watch the parent directory so we keep getting events even when the
+            // file is replaced atomically (delete + recreate), which would otherwise
+            // silently break an inotify watch on the file's inode.
+            let theme_dir = std::path::Path::new(&theme_file)
+                .parent()
+                .expect("theme file has no parent dir")
+                .to_path_buf();
+            let target_name = std::path::Path::new(&theme_file)
+                .file_name()
+                .expect("theme file has no name")
+                .to_os_string();
 
             // Bridge notify's sync callback into an async channel.
             let (notify_tx, mut notify_rx) = tokio::sync::mpsc::channel::<()>(8);
+            let target_name_cb = target_name.clone();
             let mut watcher =
                 notify::recommended_watcher(move |res: notify::Result<notify::Event>| {
                     if let Ok(event) = res {
                         use notify::EventKind::*;
                         if matches!(event.kind, Modify(_) | Create(_) | Remove(_)) {
-                            let _ = notify_tx.blocking_send(());
+                            let relevant = event.paths.iter().any(|p| {
+                                p.file_name().map_or(false, |n| n == target_name_cb)
+                            });
+                            if relevant {
+                                let _ = notify_tx.blocking_send(());
+                            }
                         }
                     }
                 })
                 .expect("failed to create watcher");
 
             watcher
-                .watch(
-                    std::path::Path::new(&theme_file),
-                    notify::RecursiveMode::NonRecursive,
-                )
+                .watch(&theme_dir, notify::RecursiveMode::NonRecursive)
                 .unwrap_or_else(|e| eprintln!("watch error: {e}"));
 
             // Emit initial state.
