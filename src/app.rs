@@ -9,7 +9,6 @@ pub struct App {
     pub light_wp: String,
     pub dark_wp: String,
     pub is_dark: Option<bool>,
-    pub log: Vec<String>,
     /// Id of the currently open window, if any.
     window_id: Option<cosmic::iced::window::Id>,
 }
@@ -36,7 +35,6 @@ impl cosmic::Application for App {
             light_wp: format!("/home/{}/Documents/Cosmic/Light.png", user),
             dark_wp: format!("/home/{}/Documents/Cosmic/Dark.png", user),
             is_dark: None,
-            log: vec!["Monitoring theme changes...".into()],
             window_id: Some(id),
         };
         app.set_header_title("COSMIC Background Sync".into());
@@ -52,14 +50,6 @@ impl cosmic::Application for App {
             Some(false) => "Light",
             None => "Detecting...",
         };
-
-        let log_items: Vec<Element<Message>> = self
-            .log
-            .iter()
-            .rev()
-            .take(8)
-            .map(|s| widget::text(s.as_str()).into())
-            .collect();
 
         widget::column()
             .push(
@@ -79,9 +69,6 @@ impl cosmic::Application for App {
                 widget::text_input("e.g. /home/user/Dark.png", &self.dark_wp)
                     .on_input(Message::DarkWpChanged),
             )
-            .push(widget::divider::horizontal::default())
-            .push(widget::text::heading("Activity Log"))
-            .push(widget::column().extend(log_items).spacing(2))
             .spacing(12)
             .padding(24)
             .into()
@@ -182,12 +169,6 @@ impl cosmic::Application for App {
 
 impl App {
     fn apply_wallpaper(&mut self, path: &str, is_dark: bool) {
-        match wallpaper::apply(path, is_dark) {
-            Ok(msg) => self.log.push(msg),
-            Err(e) => self.log.push(format!("Error: {e}")),
-        }
-        if self.log.len() > 20 {
-            self.log.drain(..self.log.len() - 20);
-        }
+        let _ = wallpaper::apply(path, is_dark);
     }
 }

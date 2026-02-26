@@ -1099,6 +1099,7 @@ name = "cosmic-wallshift"
 version = "0.1.0"
 dependencies = [
  "ksni",
+ "libc",
  "libcosmic",
  "notify",
  "tokio",

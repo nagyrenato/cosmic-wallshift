@@ -13,3 +13,4 @@ cosmic = { git = "https://github.com/pop-os/libcosmic", package = "libcosmic", f
 tokio = { version = "1.49.0", features = ["rt-multi-thread", "fs", "sync"] }
 notify = "8.2.0"
 ksni = "0.3.3"
+libc = "0.2"
