@@ -32,10 +32,11 @@ impl cosmic::Application for App {
     fn init(core: Core, _flags: ()) -> (Self, Task<Message>) {
         let id = core.main_window_id().unwrap();
         let default = find_default_wallpaper();
+        let (saved_light, saved_dark) = load_paths();
         let mut app = App {
             core,
-            light_wp: default.clone(),
-            dark_wp: default,
+            light_wp: if saved_light.is_empty() { default.clone() } else { saved_light },
+            dark_wp: if saved_dark.is_empty() { default } else { saved_dark },
             is_dark: None,
             light_wp_error: None,
             dark_wp_error: None,
@@ -108,17 +109,23 @@ impl cosmic::Application for App {
             Message::LightWpChanged(p) => {
                 self.light_wp = p;
                 self.light_wp_error = validate_image_path(&self.light_wp);
-                if self.light_wp_error.is_none() && self.is_dark == Some(false) {
-                    let wp = self.light_wp.clone();
-                    self.apply_wallpaper(&wp, false);
+                if self.light_wp_error.is_none() {
+                    save_paths(&self.light_wp, &self.dark_wp);
+                    if self.is_dark == Some(false) {
+                        let wp = self.light_wp.clone();
+                        self.apply_wallpaper(&wp, false);
+                    }
                 }
             }
             Message::DarkWpChanged(p) => {
                 self.dark_wp = p;
                 self.dark_wp_error = validate_image_path(&self.dark_wp);
-                if self.dark_wp_error.is_none() && self.is_dark == Some(true) {
-                    let wp = self.dark_wp.clone();
-                    self.apply_wallpaper(&wp, true);
+                if self.dark_wp_error.is_none() {
+                    save_paths(&self.light_wp, &self.dark_wp);
+                    if self.is_dark == Some(true) {
+                        let wp = self.dark_wp.clone();
+                        self.apply_wallpaper(&wp, true);
+                    }
                 }
             }
             Message::TrayShow => {
@@ -179,6 +186,34 @@ impl cosmic::Application for App {
             close_events,
         ])
     }
+}
+
+fn config_path() -> std::path::PathBuf {
+    let base = std::env::var("XDG_CONFIG_HOME")
+        .map(std::path::PathBuf::from)
+        .unwrap_or_else(|_| {
+            let home = std::env::var("HOME").unwrap_or_default();
+            std::path::PathBuf::from(home).join(".config")
+        });
+    base.join("cosmic").join("io.github.nagyrenato.CosmicWallShift")
+}
+
+fn save_paths(light: &str, dark: &str) {
+    let dir = config_path();
+    let _ = std::fs::create_dir_all(&dir);
+    let content = format!("{light}\n{dark}\n");
+    let _ = std::fs::write(dir.join("paths"), content);
+}
+
+fn load_paths() -> (String, String) {
+    let file = config_path().join("paths");
+    let Ok(content) = std::fs::read_to_string(&file) else {
+        return (String::new(), String::new());
+    };
+    let mut lines = content.lines();
+    let light = lines.next().unwrap_or_default().to_string();
+    let dark = lines.next().unwrap_or_default().to_string();
+    (light, dark)
 }
 
 fn find_default_wallpaper() -> String {
