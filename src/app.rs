@@ -30,12 +30,11 @@ impl cosmic::Application for App {
     }
 
     fn init(core: Core, _flags: ()) -> (Self, Task<Message>) {
-        let user = std::env::var("USER").unwrap_or_default();
         let id = core.main_window_id().unwrap();
         let mut app = App {
             core,
-            light_wp: format!("/home/{}/Documents/Cosmic/Light.png", user),
-            dark_wp: format!("/home/{}/Documents/Cosmic/Dark.png", user),
+            light_wp: String::new(),
+            dark_wp: String::new(),
             is_dark: None,
             light_wp_error: None,
             dark_wp_error: None,
@@ -182,6 +181,9 @@ impl cosmic::Application for App {
 }
 
 fn validate_image_path(path: &str) -> Option<String> {
+    if path.trim().is_empty() {
+        return None;
+    }
     let p = std::path::Path::new(path);
     let valid_ext = matches!(
         p.extension()
