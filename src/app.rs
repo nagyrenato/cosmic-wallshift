@@ -31,10 +31,11 @@ impl cosmic::Application for App {
 
     fn init(core: Core, _flags: ()) -> (Self, Task<Message>) {
         let id = core.main_window_id().unwrap();
+        let default = find_default_wallpaper();
         let mut app = App {
             core,
-            light_wp: String::new(),
-            dark_wp: String::new(),
+            light_wp: default.clone(),
+            dark_wp: default,
             is_dark: None,
             light_wp_error: None,
             dark_wp_error: None,
@@ -178,6 +179,27 @@ impl cosmic::Application for App {
             close_events,
         ])
     }
+}
+
+fn find_default_wallpaper() -> String {
+    let search_dirs = [
+        "/usr/share/backgrounds/cosmic",
+        "/usr/share/backgrounds",
+        "/usr/share/wallpapers",
+    ];
+    for dir in &search_dirs {
+        if let Ok(mut entries) = std::fs::read_dir(dir) {
+            if let Some(Ok(entry)) = entries.find(|e| {
+                e.as_ref().ok().map_or(false, |e| {
+                    validate_image_path(&e.path().to_string_lossy()).is_none()
+                        && !e.path().to_string_lossy().is_empty()
+                })
+            }) {
+                return entry.path().to_string_lossy().to_string();
+            }
+        }
+    }
+    String::new()
 }
 
 fn validate_image_path(path: &str) -> Option<String> {
