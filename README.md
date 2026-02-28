@@ -64,6 +64,10 @@ sudo just install
 3. Enter the full path to your **dark** wallpaper (e.g. `/home/user/Pictures/Dark.png`).
 4. Close the window — the app moves to the system tray and continues monitoring.
 
+**Supported formats:** `jpg`, `jpeg`, `png`, `webp`
+
+> **Note:** Wallpapers are applied with `filter_by_theme: true`, meaning COSMIC will apply a subtle tint to match the active theme. This is the default COSMIC behaviour and cannot currently be changed from the app.
+
 ### Autostart on login
 
 Create a desktop entry in `~/.config/autostart/`:
