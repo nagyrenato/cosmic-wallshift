@@ -62,12 +62,10 @@
     </release>
   </releases>
 
-  <!-- Uncomment when screenshot is uploaded to the repo under res/screenshots/
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/nagyrenato/cosmic-theme-background-switcher/main/res/screenshots/main.png</image>
+      <image>https://raw.githubusercontent.com/nagyrenato/cosmic-theme-background-switcher/main/res/screenshots/image.png</image>
       <caption>Settings window showing light and dark wallpaper selection</caption>
     </screenshot>
   </screenshots>
-  -->
 </component>

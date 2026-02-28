@@ -10,7 +10,7 @@ A lightweight system-tray app for the [COSMIC Desktop Environment](https://githu
 
 ## Screenshots
 
-> _Coming soon_
+![CosmicWallShift settings window](res/screenshots/image.png)
 
 ---
 
