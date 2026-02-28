@@ -9,6 +9,8 @@ pub struct App {
     pub light_wp: String,
     pub dark_wp: String,
     pub is_dark: Option<bool>,
+    light_wp_error: Option<String>,
+    dark_wp_error: Option<String>,
     /// Id of the currently open window, if any.
     window_id: Option<cosmic::iced::window::Id>,
 }
@@ -35,6 +37,8 @@ impl cosmic::Application for App {
             light_wp: format!("/home/{}/Documents/Cosmic/Light.png", user),
             dark_wp: format!("/home/{}/Documents/Cosmic/Dark.png", user),
             is_dark: None,
+            light_wp_error: None,
+            dark_wp_error: None,
             window_id: Some(id),
         };
         app.set_header_title("COSMIC Background Sync".into());
@@ -64,10 +68,16 @@ impl cosmic::Application for App {
                 widget::text_input("e.g. /home/user/Light.png", &self.light_wp)
                     .on_input(Message::LightWpChanged),
             )
+            .push_maybe(
+                self.light_wp_error.as_deref().map(|e| widget::text(e).size(13)),
+            )
             .push(widget::text("Dark Wallpaper Path:"))
             .push(
                 widget::text_input("e.g. /home/user/Dark.png", &self.dark_wp)
                     .on_input(Message::DarkWpChanged),
+            )
+            .push_maybe(
+                self.dark_wp_error.as_deref().map(|e| widget::text(e).size(13)),
             )
             .spacing(12)
             .padding(24)
@@ -90,19 +100,23 @@ impl cosmic::Application for App {
                     } else {
                         self.light_wp.clone()
                     };
-                    self.apply_wallpaper(&target_wp, is_dark);
+                    if validate_image_path(&target_wp).is_none() {
+                        self.apply_wallpaper(&target_wp, is_dark);
+                    }
                 }
             }
             Message::LightWpChanged(p) => {
                 self.light_wp = p;
-                if self.is_dark == Some(false) {
+                self.light_wp_error = validate_image_path(&self.light_wp);
+                if self.light_wp_error.is_none() && self.is_dark == Some(false) {
                     let wp = self.light_wp.clone();
                     self.apply_wallpaper(&wp, false);
                 }
             }
             Message::DarkWpChanged(p) => {
                 self.dark_wp = p;
-                if self.is_dark == Some(true) {
+                self.dark_wp_error = validate_image_path(&self.dark_wp);
+                if self.dark_wp_error.is_none() && self.is_dark == Some(true) {
                     let wp = self.dark_wp.clone();
                     self.apply_wallpaper(&wp, true);
                 }
@@ -165,6 +179,24 @@ impl cosmic::Application for App {
             close_events,
         ])
     }
+}
+
+fn validate_image_path(path: &str) -> Option<String> {
+    let p = std::path::Path::new(path);
+    let valid_ext = matches!(
+        p.extension()
+            .and_then(|e| e.to_str())
+            .map(|e| e.to_lowercase())
+            .as_deref(),
+        Some("jpg") | Some("jpeg") | Some("png") | Some("webp")
+    );
+    if !valid_ext {
+        return Some("Unsupported file type. Use jpg, jpeg, png or webp.".into());
+    }
+    if !p.exists() {
+        return Some("File not found.".into());
+    }
+    None
 }
 
 impl App {
