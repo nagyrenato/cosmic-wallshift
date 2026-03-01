@@ -1,4 +1,4 @@
-# CosmicWallShift
+# COSMIC WallShift
 
 A lightweight system-tray app for the [COSMIC Desktop Environment](https://github.com/pop-os/cosmic-epoch) that automatically switches your wallpaper when the system theme toggles between **Light** and **Dark** mode.
 
@@ -77,7 +77,7 @@ mkdir -p ~/.config/autostart
 cat > ~/.config/autostart/cosmic-wallshift.desktop << EOF
 [Desktop Entry]
 Type=Application
-Name=CosmicWallShift
+Name=COSMIC WallShift
 Exec=/usr/local/bin/cosmic-wallshift
 Hidden=false
 NoDisplay=false

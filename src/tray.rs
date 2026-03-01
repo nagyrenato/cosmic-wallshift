@@ -30,7 +30,7 @@ impl ksni::Tray for AppTray {
     }
 
     fn title(&self) -> String {
-        "CosmicWallShift".into()
+        "COSMIC WallShift".into()
     }
 
     fn menu(&self) -> Vec<ksni::MenuItem<Self>> {
