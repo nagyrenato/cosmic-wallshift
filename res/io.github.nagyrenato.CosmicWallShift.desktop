@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=CosmicWallShift
+Name=COSMIC WallShift
 GenericName=Wallpaper Sync
 Comment=Automatically switch wallpaper when COSMIC theme changes
 Exec=cosmic-wallshift

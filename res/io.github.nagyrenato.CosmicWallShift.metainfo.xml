@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>io.github.nagyrenato.CosmicWallShift</id>
-  <name>CosmicWallShift</name>
+  <name>COSMIC WallShift</name>
   <summary>Automatically switch wallpaper on COSMIC theme changes</summary>
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
 
   <description>
     <p>
-      CosmicWallShift is a lightweight system-tray app for the COSMIC Desktop Environment
+      COSMIC WallShift is a lightweight system-tray app for the COSMIC Desktop Environment
       that automatically switches your wallpaper when the system theme toggles between
       Light and Dark mode.
     </p>

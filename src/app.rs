@@ -45,8 +45,8 @@ impl cosmic::Application for App {
             window_id: Some(id),
             show_about: false,
         };
-        app.set_header_title("COSMIC Background Sync".into());
-        let cmd = app.set_window_title("COSMIC Background Sync".into(), id);
+        app.set_header_title("COSMIC WallShift".into());
+        let cmd = app.set_window_title("COSMIC WallShift".into(), id);
         (app, cmd)
     }
 
@@ -101,7 +101,7 @@ impl cosmic::Application for App {
         if self.show_about {
             let version = build_version();
             let about_content = widget::column()
-                .push(widget::text::title3("COSMIC Background Sync"))
+                .push(widget::text::title3("COSMIC WallShift"))
                 .push(widget::text(format!("Version: {}", version)))
                 .push(widget::divider::horizontal::default())
                 .push(
@@ -196,7 +196,7 @@ impl cosmic::Application for App {
                     );
                     self.window_id = Some(new_id);
                     // Set title once iced confirms the window is open.
-                    let title = "COSMIC Background Sync".to_string();
+                    let title = "COSMIC WallShift".to_string();
                     self.set_header_title(title.clone());
                     let title_task = self.set_window_title(title, new_id);
                     return Task::batch(vec![
@@ -324,14 +324,8 @@ impl App {
     }
 }
 
-/// Returns a version string like "0.1.2026.03.01-1-12",
-/// combining the Cargo package version with the build timestamp.
+/// Returns the application version from Cargo.toml.
 fn build_version() -> String {
-    let pkg = env!("CARGO_PKG_VERSION"); // e.g. "0.1.0"
-    let dt = env!("BUILD_DATE_TIME");    // e.g. "2026.03.01-1-12"
-    let mut parts = pkg.splitn(3, '.');
-    let major = parts.next().unwrap_or("0");
-    let minor = parts.next().unwrap_or("1");
-    format!("{}.{}.{}", major, minor, dt)
+    env!("CARGO_PKG_VERSION").to_string()
 }
 
