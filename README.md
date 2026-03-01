@@ -3,14 +3,14 @@
 A lightweight system-tray app for the [COSMIC Desktop Environment](https://github.com/pop-os/cosmic-epoch) that automatically switches your wallpaper when the system theme toggles between **Light** and **Dark** mode.
 
 ![Rust](https://img.shields.io/badge/Rust-2024--edition-orange?logo=rust)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%2F%20Wayland-informational)
 
 ---
 
 ## Screenshots
 
-![CosmicWallShift settings window](res/screenshots/image.png)
+![COSMIC WallShift settings window](res/screenshots/image.png)
 
 ---
 
@@ -43,8 +43,8 @@ sudo apt install git curl build-essential libwayland-dev libxkbcommon-dev
 ```
 
 ```bash
-git clone https://github.com/nagyrenato/cosmic-theme-background-switcher
-cd cosmic-theme-background-switcher
+git clone https://github.com/nagyrenato/cosmic-wallshift
+cd cosmic-wallshift
 cargo build --release
 ```
 
@@ -117,4 +117,4 @@ just check
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+GPL-3.0-or-later — see [LICENSE](LICENSE) for details.

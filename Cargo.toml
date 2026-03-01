@@ -3,9 +3,9 @@ name = "cosmic-wallshift"
 version = "0.1.0"
 edition = "2024"
 description = "Automatically switch wallpaper when the COSMIC Desktop theme toggles between light and dark mode"
-license = "MIT"
-repository = "https://github.com/nagyrenato/cosmic-theme-background-switcher"
-homepage = "https://github.com/nagyrenato/cosmic-theme-background-switcher"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/nagyrenato/cosmic-wallshift"
+homepage = "https://github.com/nagyrenato/cosmic-wallshift"
 authors = ["Renato Nagy <nagy.renato@hotmail.com>"]
 
 [dependencies]

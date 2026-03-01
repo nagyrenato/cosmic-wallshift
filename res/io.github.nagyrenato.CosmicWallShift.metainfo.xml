@@ -4,7 +4,7 @@
   <name>COSMIC WallShift</name>
   <summary>Automatically switch wallpaper on COSMIC theme changes</summary>
   <metadata_license>MIT</metadata_license>
-  <project_license>MIT</project_license>
+  <project_license>GPL-3.0-or-later</project_license>
 
   <description>
     <p>
@@ -22,8 +22,8 @@
 
   <launchable type="desktop-id">io.github.nagyrenato.CosmicWallShift.desktop</launchable>
 
-  <url type="homepage">https://github.com/nagyrenato/cosmic-theme-background-switcher</url>
-  <url type="bugtracker">https://github.com/nagyrenato/cosmic-theme-background-switcher/issues</url>
+  <url type="homepage">https://github.com/nagyrenato/cosmic-wallshift</url>
+  <url type="bugtracker">https://github.com/nagyrenato/cosmic-wallshift/issues</url>
 
   <developer id="io.github.nagyrenato">
     <name>Renato Nagy</name>
@@ -55,7 +55,7 @@
   <content_rating type="oars-1.1" />
 
   <releases>
-    <release version="0.1.0" date="2026-02-25">
+    <release version="0.1.0" date="2026-03-01">
       <description>
         <p>Initial release.</p>
       </description>
@@ -64,7 +64,7 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/nagyrenato/cosmic-theme-background-switcher/main/res/screenshots/image.png</image>
+      <image>https://raw.githubusercontent.com/nagyrenato/cosmic-wallshift/main/res/screenshots/image.png</image>
       <caption>Settings window showing light and dark wallpaper selection</caption>
     </screenshot>
   </screenshots>

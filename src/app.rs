@@ -119,7 +119,7 @@ impl cosmic::Application for App {
                 .push(
                     widget::row()
                         .push(widget::text::body("License:"))
-                        .push(widget::text::body("MIT"))
+                        .push(widget::text::body("GPL-3.0-or-later"))
                         .spacing(6),
                 )
                 .spacing(10)
