@@ -56,7 +56,7 @@ impl cosmic::Application for App {
             None => "Detecting...",
         };
 
-        widget::column()
+        let content = widget::column()
             .push(
                 widget::row()
                     .push(widget::text::title4("Current Theme:"))
@@ -81,7 +81,12 @@ impl cosmic::Application for App {
                 self.dark_wp_error.as_deref().map(|e| widget::text(e).size(13)),
             )
             .spacing(12)
-            .padding(24)
+            .padding(24);
+
+        widget::layer_container(content)
+            .layer(cosmic::cosmic_theme::Layer::Background)
+            .width(cosmic::iced::Length::Fill)
+            .height(cosmic::iced::Length::Fill)
             .into()
     }
 
