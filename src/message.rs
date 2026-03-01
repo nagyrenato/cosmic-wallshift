@@ -14,4 +14,8 @@ pub enum Message {
     WindowCloseRequested(window::Id),
     /// The window surface has been fully destroyed — clear tracking.
     WindowClosed(window::Id),
+    /// Open the About dialog.
+    AboutOpen,
+    /// Close the About dialog.
+    AboutClose,
 }

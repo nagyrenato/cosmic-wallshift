@@ -13,6 +13,8 @@ pub struct App {
     dark_wp_error: Option<String>,
     /// Id of the currently open window, if any.
     window_id: Option<cosmic::iced::window::Id>,
+    /// Whether the About dialog is currently open.
+    show_about: bool,
 }
 
 impl cosmic::Application for App {
@@ -41,6 +43,7 @@ impl cosmic::Application for App {
             light_wp_error: None,
             dark_wp_error: None,
             window_id: Some(id),
+            show_about: false,
         };
         app.set_header_title("COSMIC Background Sync".into());
         let cmd = app.set_window_title("COSMIC Background Sync".into(), id);
@@ -56,11 +59,18 @@ impl cosmic::Application for App {
             None => "Detecting...",
         };
 
+        let about_btn = widget::button::icon(
+            widget::icon::from_name("help-about-symbolic"),
+        )
+        .on_press(Message::AboutOpen);
+
         let content = widget::column()
             .push(
                 widget::row()
                     .push(widget::text::title4("Current Theme:"))
                     .push(widget::text::title4(theme_label))
+                    .push(widget::horizontal_space())
+                    .push(about_btn)
                     .spacing(8),
             )
             .push(widget::divider::horizontal::default())
@@ -83,11 +93,50 @@ impl cosmic::Application for App {
             .spacing(12)
             .padding(24);
 
-        widget::layer_container(content)
+        let base = widget::layer_container(content)
             .layer(cosmic::cosmic_theme::Layer::Background)
             .width(cosmic::iced::Length::Fill)
-            .height(cosmic::iced::Length::Fill)
-            .into()
+            .height(cosmic::iced::Length::Fill);
+
+        if self.show_about {
+            let version = build_version();
+            let about_content = widget::column()
+                .push(widget::text::title3("COSMIC Background Sync"))
+                .push(widget::text(format!("Version: {}", version)))
+                .push(widget::divider::horizontal::default())
+                .push(
+                    widget::row()
+                        .push(widget::text::body("Author:"))
+                        .push(widget::text::body("Renato Nagy"))
+                        .spacing(6),
+                )
+                .push(
+                    widget::row()
+                        .push(widget::text::body("E-mail:"))
+                        .push(widget::text::body("nagy.renato@hotmail.com"))
+                        .spacing(6),
+                )
+                .push(
+                    widget::row()
+                        .push(widget::text::body("License:"))
+                        .push(widget::text::body("MIT"))
+                        .spacing(6),
+                )
+                .spacing(10)
+                .padding(8);
+
+            let dialog = widget::dialog()
+                .title("About")
+                .control(about_content)
+                .primary_action(
+                    widget::button::suggested("Close")
+                        .on_press(Message::AboutClose),
+                );
+
+            cosmic::iced::widget::stack![base, dialog].into()
+        } else {
+            base.into()
+        }
     }
 
     /// Delegate all dynamically-opened windows to the same view as the main window,
@@ -169,6 +218,12 @@ impl cosmic::Application for App {
                 if self.window_id == Some(id) {
                     self.window_id = None;
                 }
+            }
+            Message::AboutOpen => {
+                self.show_about = true;
+            }
+            Message::AboutClose => {
+                self.show_about = false;
             }
         }
         Task::none()
@@ -268,3 +323,15 @@ impl App {
         let _ = wallpaper::apply(path, is_dark);
     }
 }
+
+/// Returns a version string like "0.1.2026.03.01-1-12",
+/// combining the Cargo package version with the build timestamp.
+fn build_version() -> String {
+    let pkg = env!("CARGO_PKG_VERSION"); // e.g. "0.1.0"
+    let dt = env!("BUILD_DATE_TIME");    // e.g. "2026.03.01-1-12"
+    let mut parts = pkg.splitn(3, '.');
+    let major = parts.next().unwrap_or("0");
+    let minor = parts.next().unwrap_or("1");
+    format!("{}.{}.{}", major, minor, dt)
+}
+
