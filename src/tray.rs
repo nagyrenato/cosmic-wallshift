@@ -3,6 +3,7 @@ use cosmic::iced::Subscription;
 use cosmic::iced_futures::stream;
 use ksni::TrayMethods;
 use tokio::sync::mpsc;
+use tokio::time::{sleep, Duration};
 
 use crate::message::Message;
 
@@ -64,12 +65,26 @@ pub fn subscription() -> Subscription<Message> {
         stream::channel(4, |mut tx| async move {
             let (event_tx, mut event_rx) = mpsc::channel::<TrayEvent>(8);
 
-            // _handle must stay alive so the tray remains registered.
-            let _handle = AppTray { sender: event_tx }
-                .spawn()
-                .await
-                .map_err(|e| eprintln!("System tray unavailable: {e}"))
-                .ok();
+            // Retry spawning the tray icon with backoff. This handles the case
+            // where the app autostarts before the StatusNotifierWatcher service
+            // is ready on the D-Bus.
+            let mut delay_secs = 1u64;
+            let _handle = loop {
+                match (AppTray { sender: event_tx.clone() }).spawn().await {
+                    Ok(handle) => break Some(handle),
+                    Err(e) => {
+                        eprintln!(
+                            "System tray unavailable (retrying in {delay_secs}s): {e}"
+                        );
+                        if delay_secs >= 30 {
+                            eprintln!("System tray unavailable: giving up after retries.");
+                            break None;
+                        }
+                        sleep(Duration::from_secs(delay_secs)).await;
+                        delay_secs = (delay_secs * 2).min(30);
+                    }
+                }
+            };
 
             while let Some(event) = event_rx.recv().await {
                 let msg = match event {
