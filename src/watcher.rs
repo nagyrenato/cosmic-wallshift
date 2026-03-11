@@ -11,11 +11,16 @@ pub fn theme_watcher() -> Subscription<Message> {
     Subscription::run_with_id(
         "theme-watcher",
         stream::channel(4, |mut tx| async move {
-            let user = std::env::var("USER").unwrap_or_default();
-            let theme_file = format!(
-                "/home/{}/.config/cosmic/com.system76.CosmicTheme.Mode/v1/is_dark",
-                user
-            );
+            let config_home = std::env::var("XDG_CONFIG_HOME")
+                .map(std::path::PathBuf::from)
+                .unwrap_or_else(|_| {
+                    let home = std::env::var("HOME").unwrap_or_default();
+                    std::path::PathBuf::from(home).join(".config")
+                });
+            let theme_file = config_home
+                .join("cosmic/com.system76.CosmicTheme.Mode/v1/is_dark")
+                .to_string_lossy()
+                .to_string();
             // Watch the parent directory so we keep getting events even when the
             // file is replaced atomically (delete + recreate), which would otherwise
             // silently break an inotify watch on the file's inode.

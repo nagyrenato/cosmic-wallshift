@@ -2,11 +2,16 @@
 ///
 /// Returns `Ok(applied_path)` on success, `Err(reason)` on failure.
 pub fn apply(path: &str, is_dark: bool) -> Result<String, String> {
-    let user = std::env::var("USER").unwrap_or_default();
-    let bg_config = format!(
-        "/home/{}/.config/cosmic/com.system76.CosmicBackground/v1/all",
-        user
-    );
+    let config_home = std::env::var("XDG_CONFIG_HOME")
+        .map(std::path::PathBuf::from)
+        .unwrap_or_else(|_| {
+            let home = std::env::var("HOME").unwrap_or_default();
+            std::path::PathBuf::from(home).join(".config")
+        });
+    let bg_config = config_home
+        .join("cosmic/com.system76.CosmicBackground/v1/all")
+        .to_string_lossy()
+        .to_string();
 
     let ron = format!(
         r#"(
