@@ -10,7 +10,7 @@ authors = ["Renato Nagy <nagy.renato@hotmail.com>"]
 
 [dependencies]
 cosmic = { git = "https://github.com/pop-os/libcosmic", package = "libcosmic", features = ["winit", "tokio", "wayland"] }
-tokio = { version = "1.50.0", features = ["rt-multi-thread", "fs", "sync"] }
-notify = "8.2.0"
+tokio = { version = "1.51.0", features = ["rt-multi-thread", "fs", "sync"] }
+notify = "9.0.0-rc.2"
 ksni = "0.3.3"
-libc = "0.2.183"
+libc = "1.0.0-alpha.3"
