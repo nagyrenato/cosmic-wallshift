@@ -2,119 +2,59 @@
 
 A lightweight system-tray app for the [COSMIC Desktop Environment](https://github.com/pop-os/cosmic-epoch) that automatically switches your wallpaper when the system theme toggles between **Light** and **Dark** mode.
 
-![Rust](https://img.shields.io/badge/Rust-2024--edition-orange?logo=rust)
-![License](https://img.shields.io/badge/license-GPL--3.0-blue)
-![Platform](https://img.shields.io/badge/platform-Linux%20%2F%20Wayland-informational)
-
----
-
-## Screenshots
+![Rust](https://img.shields.io/badge/Rust-2024--edition-orange?logo=rust) ![License](https://img.shields.io/badge/license-GPL--3.0-blue) ![Platform](https://img.shields.io/badge/platform-Linux%20%2F%20Wayland-informational)
 
 ![COSMIC WallShift settings window](res/screenshots/image.png)
 
----
-
-## Requirements
-
-- **Linux** with **Wayland** and the **COSMIC Desktop Environment** ([pop-os/cosmic-epoch](https://github.com/pop-os/cosmic-epoch))
-
----
-
 ## Installation
 
-### Flatpak (recommended)
-
-> Once submitted to Flathub, install with:
-
+### Flatpak (Recommended)
+Once submitted to Flathub:
 ```bash
 flatpak install flathub io.github.nagyrenato.CosmicWallShift
 ```
 
-### Build from source
-
-**Prerequisites:**
-- **Rust** toolchain (stable, 1.80+) — install via [rustup](https://rustup.rs)
-- Standard COSMIC DE build dependencies (`libwayland-dev`, `libxkbcommon-dev`, etc.)
-
-On Pop!_OS / Ubuntu:
-
-```bash
-sudo apt install git curl build-essential libwayland-dev libxkbcommon-dev
-```
+### Build from Source
+**Prerequisites:** Rust toolchain (1.80+) and COSMIC DE build dependencies.
 
 ```bash
 git clone https://github.com/nagyrenato/cosmic-wallshift
 cd cosmic-wallshift
-cargo build --release
-```
-
-**Install with [just](https://github.com/casey/just):**
-
-```bash
 just build
 sudo just install
 ```
 
----
-
 ## Usage
 
-1. Launch the app — the settings window opens automatically.
-2. Enter the full path to your **light** wallpaper (e.g. `/home/user/Pictures/Light.png`).
-3. Enter the full path to your **dark** wallpaper (e.g. `/home/user/Pictures/Dark.png`).
-4. Close the window — the app moves to the system tray and continues monitoring.
+1. Launch the app to open the settings window.
+2. Set the full paths to your **light** and **dark** wallpapers (supports `jpg`, `jpeg`, `png`, `webp`).
+3. Close the window — the app moves to the system tray and monitors theme changes.
 
-**Supported formats:** `jpg`, `jpeg`, `png`, `webp`
-
-> **Note:** Wallpapers are applied with `filter_by_theme: true`, meaning COSMIC will apply a subtle tint to match the active theme. This is the default COSMIC behaviour and cannot currently be changed from the app.
+*Note: COSMIC applies a subtle tint to wallpapers by default.*
 
 ### Autostart on login
-
-Create a desktop entry in `~/.config/autostart/`:
-
-```bash
-mkdir -p ~/.config/autostart
-cat > ~/.config/autostart/cosmic-wallshift.desktop << EOF
+Create `~/.config/autostart/cosmic-wallshift.desktop`:
+```ini
 [Desktop Entry]
 Type=Application
 Name=COSMIC WallShift
 Exec=/usr/local/bin/cosmic-wallshift
-Hidden=false
-NoDisplay=false
 X-GNOME-Autostart-enabled=true
-EOF
 ```
 
----
+## Development & Contributing
 
-## Flatpak packaging
+- **VS Code:** Install **rust-analyzer** and **CodeLLDB** to use the provided launch configuration for debugging.
+- **Checks:** Run `just check` before submitting pull requests.
 
-Test a local Flatpak build:
-
+**Test Flatpak build:**
 ```bash
 flatpak-builder --install --user --force-clean build-dir io.github.nagyrenato.CosmicWallShift.yml
-flatpak run io.github.nagyrenato.CosmicWallShift
 ```
-
-To regenerate `cargo-sources.json` after updating `Cargo.lock`:
-
+Regenerate Flatpak cargo sources after updating `Cargo.lock`:
 ```bash
-pip install aiohttp tomlkit
 python3 flatpak-cargo-generator.py Cargo.lock -o cargo-sources.json
 ```
 
----
-
-## Contributing
-
-Issues and pull requests are welcome. Please make sure the project compiles cleanly before submitting:
-
-```bash
-just check
-```
-
----
-
 ## License
-
-GPL-3.0-or-later — see [LICENSE](LICENSE) for details.
+GPL-3.0-or-later — see [LICENSE](LICENSE).
