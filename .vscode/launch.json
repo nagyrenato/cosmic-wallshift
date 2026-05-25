@@ -22,7 +22,7 @@
         },
         {
             "name": "Python: Dependency Updater",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/scripts/recheck_deps.py",
             "console": "integratedTerminal",
