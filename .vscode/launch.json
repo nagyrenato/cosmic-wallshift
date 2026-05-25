@@ -19,6 +19,14 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "kill-cosmic-wallshift"
+        },
+        {
+            "name": "Python: Dependency Updater",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/recheck_deps.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
