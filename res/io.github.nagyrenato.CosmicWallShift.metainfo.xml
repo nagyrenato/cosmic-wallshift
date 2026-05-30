@@ -14,7 +14,7 @@
       Light and Dark mode.
     </p>
     <ul>
-      <li>Detects theme changes in real-time using inotify — no polling</li>
+      <li>Detects theme changes in real-time using inotify (no polling)</li>
       <li>Applies the correct wallpaper instantly on every theme switch</li>
       <li>Sits quietly in the system tray; close the window without quitting</li>
       <li>Built with libcosmic for a native COSMIC look and feel</li>
