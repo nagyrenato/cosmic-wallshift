@@ -11,9 +11,7 @@ pub struct App {
     pub is_dark: Option<bool>,
     light_wp_error: Option<String>,
     dark_wp_error: Option<String>,
-    // Active window id
     window_id: Option<cosmic::iced::window::Id>,
-    // About dialog state
     show_about: bool,
 }
 
@@ -139,7 +137,6 @@ impl cosmic::Application for App {
         }
     }
 
-    // Return the main view for all windows.
     fn view_window(&self, _id: cosmic::iced::window::Id) -> Element<'_, Message> {
         self.view()
     }
@@ -183,7 +180,6 @@ impl cosmic::Application for App {
             }
             Message::TrayShow => {
                 if self.window_id.is_none() {
-                    // Recreate window.
                     let (new_id, open_task) = cosmic::iced::window::open(
                         cosmic::iced::window::Settings {
                             size: cosmic::iced::Size::new(560.0, 520.0),
@@ -192,7 +188,6 @@ impl cosmic::Application for App {
                         },
                     );
                     self.window_id = Some(new_id);
-                    // Set window title.
                     let title = "COSMIC WallShift".to_string();
                     self.set_header_title(title.clone());
                     let title_task = self.set_window_title(title, new_id);
@@ -206,11 +201,9 @@ impl cosmic::Application for App {
                 }
             }
             Message::WindowCloseRequested(id) => {
-                // Explicit close request.
                 return cosmic::iced::window::close(id);
             }
             Message::WindowClosed(id) => {
-                // Clear window id on close.
                 if self.window_id == Some(id) {
                     self.window_id = None;
                 }
@@ -320,7 +313,6 @@ impl App {
     }
 }
 
-// Get application version
 fn build_version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
 }

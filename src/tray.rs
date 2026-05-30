@@ -7,14 +7,10 @@ use tokio::time::{sleep, Duration};
 
 use crate::message::Message;
 
-// ── internal event ──────────────────────────────────────────────────────────
-
 #[derive(Debug)]
 enum TrayEvent {
     Show,
 }
-
-// ── ksni tray definition ─────────────────────────────────────────────────────
 
 #[derive(Debug)]
 struct AppTray {
@@ -56,16 +52,12 @@ impl ksni::Tray for AppTray {
     }
 }
 
-// ── subscription ─────────────────────────────────────────────────────────────
-
-/// Spawns the system-tray icon
 pub fn subscription() -> Subscription<Message> {
     Subscription::run_with_id(
         "tray",
         stream::channel(4, |mut tx| async move {
             let (event_tx, mut event_rx) = mpsc::channel::<TrayEvent>(8);
 
-            // Retry spawning tray icon with backoff.
             let mut delay_secs = 1u64;
             let _handle = loop {
                 match (AppTray { sender: event_tx.clone() }).spawn().await {

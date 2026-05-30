@@ -5,7 +5,6 @@ use notify::Watcher;
 
 use crate::message::Message;
 
-// Watch COSMIC theme file changes.
 pub fn theme_watcher() -> Subscription<Message> {
     Subscription::run_with_id(
         "theme-watcher",
@@ -20,7 +19,6 @@ pub fn theme_watcher() -> Subscription<Message> {
                 .join("cosmic/com.system76.CosmicTheme.Mode/v1/is_dark")
                 .to_string_lossy()
                 .to_string();
-            // Watch parent directory for atomic replaces.
             let theme_dir = std::path::Path::new(&theme_file)
                 .parent()
                 .expect("theme file has no parent dir")
@@ -30,7 +28,6 @@ pub fn theme_watcher() -> Subscription<Message> {
                 .expect("theme file has no name")
                 .to_os_string();
 
-            // Notify to async.
             let (notify_tx, mut notify_rx) = tokio::sync::mpsc::channel::<()>(8);
             let target_name_cb = target_name.clone();
             let mut watcher =
@@ -53,14 +50,12 @@ pub fn theme_watcher() -> Subscription<Message> {
                 .watch(&theme_dir, notify::RecursiveMode::NonRecursive)
                 .unwrap_or_else(|e| eprintln!("watch error: {e}"));
 
-            // Initial state.
             let mut last = String::new();
             if let Ok(content) = tokio::fs::read_to_string(&theme_file).await {
                 last = content.trim().to_string();
                 let _ = tx.send(Message::ThemeChanged(last == "true")).await;
             }
 
-            // Process filesystem events.
             while notify_rx.recv().await.is_some() {
                 if let Ok(content) = tokio::fs::read_to_string(&theme_file).await {
                     let current = content.trim().to_string();
