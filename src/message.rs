@@ -2,20 +2,20 @@ use cosmic::iced::window;
 
 #[derive(Clone, Debug)]
 pub enum Message {
-    /// The system theme changed; `true` = dark mode.
+    // System theme changed (true = dark mode).
     ThemeChanged(bool),
-    /// The user edited the light wallpaper path.
+    // Light wallpaper path changed.
     LightWpChanged(String),
-    /// The user edited the dark wallpaper path.
+    // Dark wallpaper path changed.
     DarkWpChanged(String),
-    /// "Show Window" was clicked in the system tray.
+    // Show window requested.
     TrayShow,
-    /// The window × button was pressed — tell iced to close it.
+    // Window close requested.
     WindowCloseRequested(window::Id),
-    /// The window surface has been fully destroyed — clear tracking.
+    // Window closed.
     WindowClosed(window::Id),
-    /// Open the About dialog.
+    // Open about dialog.
     AboutOpen,
-    /// Close the About dialog.
+    // Close about dialog.
     AboutClose,
 }

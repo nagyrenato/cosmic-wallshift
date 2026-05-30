@@ -11,12 +11,12 @@ fn acquire_instance_lock() -> Option<UnixListener> {
     let uid = unsafe { libc::getuid() };
     let socket_path = format!("/run/user/{}/cosmic-wallshift.lock", uid);
 
-    // If we can connect, a live instance is already listening — bail out.
+    // Return if already listening.
     if std::os::unix::net::UnixStream::connect(&socket_path).is_ok() {
         return None;
     }
 
-    // Connection failed → socket is stale or absent. Remove and (re)create it.
+    // Remove stale socket.
     let _ = std::fs::remove_file(&socket_path);
 
     match UnixListener::bind(&socket_path) {
@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
-    // exit_on_close(false): clicking × minimizes to tray instead of quitting.
+    // Keep running in background when window is closed.
     let settings = Settings::default()
         .size(cosmic::iced::Size::new(560.0, 520.0))
         .exit_on_close(false);

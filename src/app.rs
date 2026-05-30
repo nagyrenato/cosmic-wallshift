@@ -11,9 +11,9 @@ pub struct App {
     pub is_dark: Option<bool>,
     light_wp_error: Option<String>,
     dark_wp_error: Option<String>,
-    /// Id of the currently open window, if any.
+    // Active window id
     window_id: Option<cosmic::iced::window::Id>,
-    /// Whether the About dialog is currently open.
+    // About dialog state
     show_about: bool,
 }
 
@@ -139,8 +139,7 @@ impl cosmic::Application for App {
         }
     }
 
-    /// Delegate all dynamically-opened windows to the same view as the main window,
-    /// since we only ever have one window type.
+    // Return the main view for all windows.
     fn view_window(&self, _id: cosmic::iced::window::Id) -> Element<'_, Message> {
         self.view()
     }
@@ -184,9 +183,7 @@ impl cosmic::Application for App {
             }
             Message::TrayShow => {
                 if self.window_id.is_none() {
-                    // Window was closed — create a fresh one.
-                    // On Wayland, set_visible(false→true) is unreliable;
-                    // close + reopen is the only guaranteed path.
+                    // Recreate window.
                     let (new_id, open_task) = cosmic::iced::window::open(
                         cosmic::iced::window::Settings {
                             size: cosmic::iced::Size::new(560.0, 520.0),
@@ -195,7 +192,7 @@ impl cosmic::Application for App {
                         },
                     );
                     self.window_id = Some(new_id);
-                    // Set title once iced confirms the window is open.
+                    // Set window title.
                     let title = "COSMIC WallShift".to_string();
                     self.set_header_title(title.clone());
                     let title_task = self.set_window_title(title, new_id);
@@ -209,12 +206,11 @@ impl cosmic::Application for App {
                 }
             }
             Message::WindowCloseRequested(id) => {
-                // exit_on_close_request: false means this fires instead of auto-closing.
-                // Explicitly close the surface; wait for Closed to clear tracking.
+                // Explicit close request.
                 return cosmic::iced::window::close(id);
             }
             Message::WindowClosed(id) => {
-                // Window is fully gone — safe to clear the tracked id now.
+                // Clear window id on close.
                 if self.window_id == Some(id) {
                     self.window_id = None;
                 }
@@ -324,7 +320,7 @@ impl App {
     }
 }
 
-/// Returns the application version from Cargo.toml.
+// Get application version
 fn build_version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
 }

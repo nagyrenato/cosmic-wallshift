@@ -1,6 +1,4 @@
-/// Writes the COSMIC background config RON file and touches it so the daemon picks up the change.
-///
-/// Returns `Ok(applied_path)` on success, `Err(reason)` on failure.
+// Apply wallpaper and trigger cosmic-bg reload.
 pub fn apply(path: &str, is_dark: bool) -> Result<String, String> {
     let config_home = std::env::var("XDG_CONFIG_HOME")
         .map(std::path::PathBuf::from)

@@ -58,16 +58,14 @@ impl ksni::Tray for AppTray {
 
 // ── subscription ─────────────────────────────────────────────────────────────
 
-/// Spawns the system-tray icon and emits [`Message::TrayShow`] when clicked.
+/// Spawns the system-tray icon
 pub fn subscription() -> Subscription<Message> {
     Subscription::run_with_id(
         "tray",
         stream::channel(4, |mut tx| async move {
             let (event_tx, mut event_rx) = mpsc::channel::<TrayEvent>(8);
 
-            // Retry spawning the tray icon with backoff. This handles the case
-            // where the app autostarts before the StatusNotifierWatcher service
-            // is ready on the D-Bus.
+            // Retry spawning tray icon with backoff.
             let mut delay_secs = 1u64;
             let _handle = loop {
                 match (AppTray { sender: event_tx.clone() }).spawn().await {
