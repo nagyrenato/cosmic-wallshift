@@ -8,15 +8,11 @@ sdk-extensions:
 command: cosmic-wallshift
 
 finish-args:
-  # Wayland display — COSMIC DE is Wayland-only; fallback-x11 intentionally
-  # omitted. Requires a finish-args-only-wayland exception on Flathub.
+  # Wayland display (COSMIC DE is Wayland-only)
   - --socket=wayland
   # GPU rendering
   - --device=dri
-  # Read theme mode file, write wallpaper config — both live under ~/.config/cosmic/
-  # Access is intentionally rw; the app reads cosmic theme state and writes
-  # cosmic-bg wallpaper config. Requires a finish-args-unnecessary-xdg-config-cosmic-rw-access
-  # exception on Flathub.
+  # rw access to cosmic-bg wallpaper config
   - --filesystem=xdg-config/cosmic:rw
   # System tray (StatusNotifierItem)
   - --talk-name=org.kde.StatusNotifierWatcher
