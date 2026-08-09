@@ -11,6 +11,6 @@ authors = ["Renato Nagy <nagy.renato@hotmail.com>"]
 [dependencies]
 cosmic = { git = "https://github.com/pop-os/libcosmic", package = "libcosmic", features = ["winit", "tokio", "wayland"] }
 tokio = { version = "1.52.3", features = ["rt-multi-thread", "fs", "sync"] }
-notify = "9.0.0-rc.4"
+notify = "8"
 ksni = "0.3.4"
 libc = "0.2"

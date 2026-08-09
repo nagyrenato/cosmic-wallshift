@@ -1000,7 +1000,7 @@ dependencies = [
  "futures-util",
  "iced_futures",
  "known-folders",
- "notify 8.2.0",
+ "notify",
  "ron",
  "serde",
  "tokio",
@@ -1101,7 +1101,7 @@ dependencies = [
  "ksni",
  "libc",
  "libcosmic",
- "notify 9.0.0-rc.4",
+ "notify",
  "tokio",
 ]
 
@@ -3203,26 +3203,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "notify"
-version = "9.0.0-rc.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b44b771d4dd781ef14c84078693e67495da6b47f609f72e8a4da8420a861240e"
-dependencies = [
- "bitflags 2.11.0",
- "inotify",
- "kqueue",
- "libc",
- "log",
- "mio",
- "notify-types",
- "objc2-core-foundation",
- "objc2-core-services",
- "walkdir",
- "windows-sys 0.61.2",
- "xxhash-rust",
-]
-
-[[package]]
 name = "notify-types"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3405,16 +3385,6 @@ dependencies = [
  "objc2 0.5.2",
  "objc2-contacts",
  "objc2-foundation 0.2.2",
-]
-
-[[package]]
-name = "objc2-core-services"
-version = "0.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "583300ad934cba24ff5292aee751ecc070f7ca6b39a574cc21b7b5e588e06a0b"
-dependencies = [
- "libc",
- "objc2-core-foundation",
 ]
 
 [[package]]
@@ -6467,12 +6437,6 @@ name = "xmlwriter"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec7a2a501ed189703dba8b08142f057e887dfc4b2cc4db2d343ac6376ba3e0b9"
-
-[[package]]
-name = "xxhash-rust"
-version = "0.8.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fdd20c5420375476fbd4394763288da7eb0cc0b8c11deed431a91562af7335d3"
 
 [[package]]
 name = "yansi"
