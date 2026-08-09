@@ -1,6 +1,6 @@
 app-id: io.github.nagyrenato.CosmicWallShift
 runtime: org.freedesktop.Platform
-runtime-version: '25.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
@@ -10,6 +10,8 @@ command: cosmic-wallshift
 finish-args:
   - --socket=wayland
   - --device=dri
+  # Reads ~/.config/cosmic/com.system76.CosmicTheme.Mode/v1/is_dark to detect theme,
+  # and writes ~/.config/cosmic/com.system76.CosmicBackground/v1/all to set the wallpaper.
   - --filesystem=xdg-config/cosmic:rw
   - --talk-name=org.kde.StatusNotifierWatcher
   - --talk-name=com.canonical.AppMenu.Registrar

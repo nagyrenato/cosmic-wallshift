@@ -9,26 +9,30 @@
 
   <description>
     <p>
-      COSMIC WallShift is a lightweight system-tray app for the COSMIC Desktop Environment
-      that automatically switches your wallpaper when the system theme toggles between
-      Light and Dark mode.
+      COSMIC WallShift is a small tray app I wrote for the COSMIC desktop that
+      handles one thing: swapping your wallpaper whenever you toggle between Light
+      and Dark mode. No polling, no timers — it uses inotify to watch the theme
+      config file directly, so the switch is instant.
     </p>
-    <ul>
-      <li>Detects theme changes in real-time using inotify (no polling)</li>
-      <li>Applies the correct wallpaper instantly on every theme switch</li>
-      <li>Sits quietly in the system tray; close the window without quitting</li>
-      <li>Built with libcosmic for a native COSMIC look and feel</li>
-    </ul>
+    <p>
+      Set a wallpaper for each theme, close the window, and it just runs quietly
+      in the system tray. You can bring the window back at any time from the tray
+      menu. The app prevents multiple instances of itself from running via a Unix
+      socket lock.
+    </p>
   </description>
 
   <launchable type="desktop-id">io.github.nagyrenato.CosmicWallShift.desktop</launchable>
 
   <url type="homepage">https://github.com/nagyrenato/cosmic-wallshift</url>
   <url type="bugtracker">https://github.com/nagyrenato/cosmic-wallshift/issues</url>
+  <url type="vcs-browser">https://github.com/nagyrenato/cosmic-wallshift</url>
 
   <developer id="io.github.nagyrenato">
     <name>Renato Nagy</name>
   </developer>
+
+  <update_contact>nagy.renato@hotmail.com</update_contact>
 
   <recommends>
     <control>keyboard</control>
