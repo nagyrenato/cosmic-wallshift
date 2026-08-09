@@ -1,5 +1,5 @@
-use cosmic::iced::futures::SinkExt;
 use cosmic::iced::Subscription;
+use cosmic::iced::futures::SinkExt;
 use cosmic::iced_futures::stream;
 use notify::Watcher;
 
@@ -35,9 +35,10 @@ pub fn theme_watcher() -> Subscription<Message> {
                     if let Ok(event) = res {
                         use notify::EventKind::*;
                         if matches!(event.kind, Modify(_) | Create(_) | Remove(_)) {
-                            let relevant = event.paths.iter().any(|p| {
-                                p.file_name().map_or(false, |n| n == target_name_cb)
-                            });
+                            let relevant = event
+                                .paths
+                                .iter()
+                                .any(|p| p.file_name().is_some_and(|n| n == target_name_cb));
                             if relevant {
                                 let _ = notify_tx.blocking_send(());
                             }

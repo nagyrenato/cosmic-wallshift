@@ -1,6 +1,6 @@
 use cosmic::app::{Core, Task};
-use cosmic::iced::{event, Event, Subscription};
-use cosmic::{executor, ApplicationExt, Element};
+use cosmic::iced::{Event, Subscription, event};
+use cosmic::{ApplicationExt, Element, executor};
 
 use crate::message::Message;
 use crate::{tray, wallpaper, watcher};
@@ -35,8 +35,16 @@ impl cosmic::Application for App {
         let (saved_light, saved_dark) = load_paths();
         let mut app = App {
             core,
-            light_wp: if saved_light.is_empty() { default.clone() } else { saved_light },
-            dark_wp: if saved_dark.is_empty() { default } else { saved_dark },
+            light_wp: if saved_light.is_empty() {
+                default.clone()
+            } else {
+                saved_light
+            },
+            dark_wp: if saved_dark.is_empty() {
+                default
+            } else {
+                saved_dark
+            },
             is_dark: None,
             light_wp_error: None,
             dark_wp_error: None,
@@ -57,10 +65,8 @@ impl cosmic::Application for App {
             None => "Detecting...",
         };
 
-        let about_btn = widget::button::icon(
-            widget::icon::from_name("help-about-symbolic"),
-        )
-        .on_press(Message::AboutOpen);
+        let about_btn = widget::button::icon(widget::icon::from_name("help-about-symbolic"))
+            .on_press(Message::AboutOpen);
 
         let content = widget::column()
             .push(
@@ -78,7 +84,9 @@ impl cosmic::Application for App {
                     .on_input(Message::LightWpChanged),
             )
             .push_maybe(
-                self.light_wp_error.as_deref().map(|e| widget::text(e).size(13)),
+                self.light_wp_error
+                    .as_deref()
+                    .map(|e| widget::text(e).size(13)),
             )
             .push(widget::text("Dark Wallpaper Path:"))
             .push(
@@ -86,7 +94,9 @@ impl cosmic::Application for App {
                     .on_input(Message::DarkWpChanged),
             )
             .push_maybe(
-                self.dark_wp_error.as_deref().map(|e| widget::text(e).size(13)),
+                self.dark_wp_error
+                    .as_deref()
+                    .map(|e| widget::text(e).size(13)),
             )
             .spacing(12)
             .padding(24);
@@ -126,10 +136,7 @@ impl cosmic::Application for App {
             let dialog = widget::dialog()
                 .title("About")
                 .control(about_content)
-                .primary_action(
-                    widget::button::suggested("Close")
-                        .on_press(Message::AboutClose),
-                );
+                .primary_action(widget::button::suggested("Close").on_press(Message::AboutClose));
 
             cosmic::iced::widget::stack![base, dialog].into()
         } else {
@@ -180,13 +187,12 @@ impl cosmic::Application for App {
             }
             Message::TrayShow => {
                 if self.window_id.is_none() {
-                    let (new_id, open_task) = cosmic::iced::window::open(
-                        cosmic::iced::window::Settings {
+                    let (new_id, open_task) =
+                        cosmic::iced::window::open(cosmic::iced::window::Settings {
                             size: cosmic::iced::Size::new(560.0, 520.0),
                             exit_on_close_request: false,
                             ..Default::default()
-                        },
-                    );
+                        });
                     self.window_id = Some(new_id);
                     let title = "COSMIC WallShift".to_string();
                     self.set_header_title(title.clone());
@@ -223,9 +229,7 @@ impl cosmic::Application for App {
             Event::Window(cosmic::iced::window::Event::CloseRequested) => {
                 Some(Message::WindowCloseRequested(id))
             }
-            Event::Window(cosmic::iced::window::Event::Closed) => {
-                Some(Message::WindowClosed(id))
-            }
+            Event::Window(cosmic::iced::window::Event::Closed) => Some(Message::WindowClosed(id)),
             _ => None,
         });
 
@@ -244,7 +248,8 @@ fn config_path() -> std::path::PathBuf {
             let home = std::env::var("HOME").unwrap_or_default();
             std::path::PathBuf::from(home).join(".config")
         });
-    base.join("cosmic").join("io.github.nagyrenato.CosmicWallShift")
+    base.join("cosmic")
+        .join("io.github.nagyrenato.CosmicWallShift")
 }
 
 fn save_paths(light: &str, dark: &str) {
@@ -272,15 +277,16 @@ fn find_default_wallpaper() -> String {
         "/usr/share/wallpapers",
     ];
     for dir in &search_dirs {
-        if let Ok(mut entries) = std::fs::read_dir(dir) {
-            if let Some(Ok(entry)) = entries.find(|e| {
-                e.as_ref().ok().map_or(false, |e| {
-                    validate_image_path(&e.path().to_string_lossy()).is_none()
-                        && !e.path().to_string_lossy().is_empty()
-                })
-            }) {
-                return entry.path().to_string_lossy().to_string();
-            }
+        let Ok(mut entries) = std::fs::read_dir(dir) else {
+            continue;
+        };
+        if let Some(Ok(entry)) = entries.find(|e| {
+            e.as_ref().ok().is_some_and(|e| {
+                validate_image_path(&e.path().to_string_lossy()).is_none()
+                    && !e.path().to_string_lossy().is_empty()
+            })
+        }) {
+            return entry.path().to_string_lossy().to_string();
         }
     }
     String::new()
@@ -316,4 +322,3 @@ impl App {
 fn build_version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
 }
-

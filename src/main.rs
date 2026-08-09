@@ -15,10 +15,7 @@ fn acquire_instance_lock() -> Option<UnixListener> {
     }
     let _ = std::fs::remove_file(&socket_path);
 
-    match UnixListener::bind(&socket_path) {
-        Ok(listener) => Some(listener),
-        Err(_) => None,
-    }
+    UnixListener::bind(&socket_path).ok()
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
