@@ -47,4 +47,4 @@ flatpak-builder --install --user --force-clean build-dir io.github.nagyrenato.Co
 ```
 
 ## License
-GPL-3.0-or-later — see [LICENSE](LICENSE).
+GPL-3.0-or-later - see [LICENSE](LICENSE).

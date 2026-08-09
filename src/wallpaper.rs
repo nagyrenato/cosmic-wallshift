@@ -23,8 +23,7 @@ pub fn apply(path: &str, is_dark: bool) -> Result<String, String> {
         path
     );
 
-    std::fs::write(&bg_config, &ron)
-        .map_err(|e| format!("could not write config: {e}"))?;
+    std::fs::write(&bg_config, &ron).map_err(|e| format!("could not write config: {e}"))?;
 
     let _ = std::process::Command::new("touch").arg(&bg_config).status();
 

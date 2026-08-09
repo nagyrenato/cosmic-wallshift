@@ -1,9 +1,9 @@
-use cosmic::iced::futures::SinkExt;
 use cosmic::iced::Subscription;
+use cosmic::iced::futures::SinkExt;
 use cosmic::iced_futures::stream;
 use ksni::TrayMethods;
 use tokio::sync::mpsc;
-use tokio::time::{sleep, Duration};
+use tokio::time::{Duration, sleep};
 
 use crate::message::Message;
 
@@ -60,12 +60,15 @@ pub fn subscription() -> Subscription<Message> {
 
             let mut delay_secs = 1u64;
             let _handle = loop {
-                match (AppTray { sender: event_tx.clone() }).spawn().await {
+                match (AppTray {
+                    sender: event_tx.clone(),
+                })
+                .spawn()
+                .await
+                {
                     Ok(handle) => break Some(handle),
                     Err(e) => {
-                        eprintln!(
-                            "System tray unavailable (retrying in {delay_secs}s): {e}"
-                        );
+                        eprintln!("System tray unavailable (retrying in {delay_secs}s): {e}");
                         if delay_secs >= 30 {
                             eprintln!("System tray unavailable: giving up after retries.");
                             break None;
