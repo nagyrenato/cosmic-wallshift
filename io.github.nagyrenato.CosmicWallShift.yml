@@ -26,6 +26,7 @@ modules:
   - name: cosmic-wallshift
     buildsystem: simple
     build-commands:
+      - find /run/build/cosmic-wallshift/cargo -name Cargo.toml -exec sed -i '/rust-version/d' {} + || true
       - cargo --offline build --release --verbose
       - install -Dm755 target/release/cosmic-wallshift /app/bin/cosmic-wallshift
       - install -Dm644 res/io.github.nagyrenato.CosmicWallShift.desktop
