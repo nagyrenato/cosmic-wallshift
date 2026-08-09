@@ -38,5 +38,5 @@ modules:
       - type: git
         url: https://github.com/nagyrenato/cosmic-wallshift.git
         tag: v0.1.0
-        commit: ee7c159aadec28c9b6dd6f0d59ef758a529f66d1
+        commit: 79296f66851efcdb0f84cb9c77e4119df1c7aebb
       - cargo-sources.json
