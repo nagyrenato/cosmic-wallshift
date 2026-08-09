@@ -9,10 +9,7 @@ A lightweight system-tray app for the [COSMIC Desktop Environment](https://githu
 ## Installation
 
 ### Flatpak (Recommended)
-Once submitted to Flathub:
-```bash
-flatpak install flathub io.github.nagyrenato.CosmicWallShift
-```
+Once submitted to the COSMIC app repository, you will be able to install it directly from the COSMIC App Store or via the `flatpak` CLI if the remote is configured.
 
 ### Build from Source
 **Prerequisites:** Rust toolchain (1.80+) and COSMIC DE build dependencies.
@@ -20,8 +17,8 @@ flatpak install flathub io.github.nagyrenato.CosmicWallShift
 ```bash
 git clone https://github.com/nagyrenato/cosmic-wallshift
 cd cosmic-wallshift
-just build
-sudo just install
+cargo build --release
+sudo cp target/release/cosmic-wallshift /usr/local/bin/
 ```
 
 ## Usage
@@ -44,16 +41,11 @@ X-GNOME-Autostart-enabled=true
 
 ## Development & Contributing
 
-- **VS Code:** Install **rust-analyzer** and **CodeLLDB** to use the provided launch configuration for debugging.
-- **Checks:** Run `just check` before submitting pull requests.
+- **Checks:** Run `cargo fmt --check` and `cargo clippy -- -D warnings` before submitting pull requests.
 
 **Test Flatpak build:**
 ```bash
 flatpak-builder --install --user --force-clean build-dir io.github.nagyrenato.CosmicWallShift.yml
-```
-Regenerate Flatpak cargo sources after updating `Cargo.lock`:
-```bash
-python3 flatpak-cargo-generator.py Cargo.lock -o cargo-sources.json
 ```
 
 ## License
