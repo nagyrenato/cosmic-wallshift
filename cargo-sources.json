@@ -4266,19 +4266,6 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/notify/notify-9.0.0-rc.4.crate",
-        "sha256": "b44b771d4dd781ef14c84078693e67495da6b47f609f72e8a4da8420a861240e",
-        "dest": "cargo/vendor/notify-9.0.0-rc.4"
-    },
-    {
-        "type": "inline",
-        "contents": "{\"package\": \"b44b771d4dd781ef14c84078693e67495da6b47f609f72e8a4da8420a861240e\", \"files\": {}}",
-        "dest": "cargo/vendor/notify-9.0.0-rc.4",
-        "dest-filename": ".cargo-checksum.json"
-    },
-    {
-        "type": "archive",
-        "archive-type": "tar-gzip",
         "url": "https://static.crates.io/crates/notify-types/notify-types-2.1.0.crate",
         "sha256": "42b8cfee0e339a0337359f3c88165702ac6e600dc01c0cc9579a92d62b08477a",
         "dest": "cargo/vendor/notify-types-2.1.0"
@@ -4495,19 +4482,6 @@
         "type": "inline",
         "contents": "{\"package\": \"000cfee34e683244f284252ee206a27953279d370e309649dc3ee317b37e5781\", \"files\": {}}",
         "dest": "cargo/vendor/objc2-core-location-0.2.2",
-        "dest-filename": ".cargo-checksum.json"
-    },
-    {
-        "type": "archive",
-        "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/objc2-core-services/objc2-core-services-0.3.2.crate",
-        "sha256": "583300ad934cba24ff5292aee751ecc070f7ca6b39a574cc21b7b5e588e06a0b",
-        "dest": "cargo/vendor/objc2-core-services-0.3.2"
-    },
-    {
-        "type": "inline",
-        "contents": "{\"package\": \"583300ad934cba24ff5292aee751ecc070f7ca6b39a574cc21b7b5e588e06a0b\", \"files\": {}}",
-        "dest": "cargo/vendor/objc2-core-services-0.3.2",
         "dest-filename": ".cargo-checksum.json"
     },
     {
@@ -8467,19 +8441,6 @@
         "type": "inline",
         "contents": "{\"package\": \"ec7a2a501ed189703dba8b08142f057e887dfc4b2cc4db2d343ac6376ba3e0b9\", \"files\": {}}",
         "dest": "cargo/vendor/xmlwriter-0.1.0",
-        "dest-filename": ".cargo-checksum.json"
-    },
-    {
-        "type": "archive",
-        "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/xxhash-rust/xxhash-rust-0.8.15.crate",
-        "sha256": "fdd20c5420375476fbd4394763288da7eb0cc0b8c11deed431a91562af7335d3",
-        "dest": "cargo/vendor/xxhash-rust-0.8.15"
-    },
-    {
-        "type": "inline",
-        "contents": "{\"package\": \"fdd20c5420375476fbd4394763288da7eb0cc0b8c11deed431a91562af7335d3\", \"files\": {}}",
-        "dest": "cargo/vendor/xxhash-rust-0.8.15",
         "dest-filename": ".cargo-checksum.json"
     },
     {
