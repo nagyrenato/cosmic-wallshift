@@ -25,9 +25,7 @@ sudo cp target/release/cosmic-wallshift /usr/local/bin/
 
 1. Launch the app to open the settings window.
 2. Set the full paths to your **light** and **dark** wallpapers (supports `jpg`, `jpeg`, `png`, `webp`).
-3. Close the window — the app moves to the system tray and monitors theme changes.
-
-*Note: COSMIC applies a subtle tint to wallpapers by default.*
+3. Close the window. The app moves to the system tray and monitors theme changes.
 
 ### Autostart on login
 Create `~/.config/autostart/cosmic-wallshift.desktop`:

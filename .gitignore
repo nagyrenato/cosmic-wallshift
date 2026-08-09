@@ -3,3 +3,6 @@
 /.flatpak-builder
 /.venv
 /flatpak-cargo-generator.py
+/.vscode
+/.antigravitycli
+/*.code-workspace
